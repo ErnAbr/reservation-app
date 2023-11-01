@@ -4,6 +4,7 @@ import { Login } from "./pages/Login/Login";
 import { Register } from "./pages/Register/Register";
 import { Admin } from "./pages/Admin/Admin";
 import { Header } from "./components/Header/Header";
+import { Client } from "./pages/Client/Client";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/client" element={<Client />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>
       </main>
