@@ -10,7 +10,7 @@ require("dotenv").config();
 
 connectDb();
 const server = express();
-const userController = require("./controllers/userController");
+const securityController = require("./controllers/securityController");
 const adminController = require("./controllers/adminController");
 
 server.use(express.json());
@@ -22,7 +22,7 @@ server.use(
 );
 server.use(cookieParser());
 
-server.use(API, userController);
+server.use(API, securityController);
 server.use(ADMIN_API, adminController);
 
 const PORT = 3005;
