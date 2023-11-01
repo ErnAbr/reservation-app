@@ -7,13 +7,19 @@ export const LoginContext = createContext({
   error: null,
   data: null,
   login: async () => {},
+  setIsAdmin: () => {},
+  setData: () => {},
 });
 
 export const LoginProvider = ({ children }) => {
+  const initialIsAdmin = localStorage.getItem("isAdmin");
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(
+    initialIsAdmin === "true" ? true : initialIsAdmin === "false" ? false : null
+  );
 
   const login = async (values) => {
     setLoading(true);
@@ -35,7 +41,11 @@ export const LoginProvider = ({ children }) => {
       }
 
       setData(responseData);
-      setIsAdmin(responseData.isAdmin);
+
+      if (responseData && responseData.isAdmin !== undefined) {
+        setIsAdmin(responseData.isAdmin);
+        localStorage.setItem("isAdmin", responseData.isAdmin.toString());
+      }
     } catch (error) {
       setError(error);
     } finally {
@@ -43,7 +53,9 @@ export const LoginProvider = ({ children }) => {
     }
   };
   return (
-    <LoginContext.Provider value={{ isAdmin, loading, error, data, login }}>
+    <LoginContext.Provider
+      value={{ isAdmin, loading, error, data, login, setIsAdmin, setData }}
+    >
       {children}
     </LoginContext.Provider>
   );

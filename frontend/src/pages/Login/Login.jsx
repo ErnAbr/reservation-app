@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { LoginForm } from "../../components/LoginForm/LoginForm";
-import { LoginContext } from "../../services/useLogin";
+import { LoginContext } from "../../services/LoginProvider";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {

@@ -2,16 +2,21 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles/header.module.css";
 import { useContext, useState } from "react";
-import { LoginContext } from "../../services/useLogin";
+import { LoginContext } from "../../services/LoginProvider";
+import { useLogout } from "../../services/useLogout";
 
 export const Navigation = () => {
   const [isActive, setIsActive] = useState(false);
-  const { isAdmin } = useContext(LoginContext);
+
+  const { isAdmin, setData, setIsAdmin } = useContext(LoginContext);
 
   const navigate = useNavigate();
+  const logout = useLogout(setData);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setIsActive(false);
+    setIsAdmin(null);
+    await logout();
     navigate("/");
   };
 
