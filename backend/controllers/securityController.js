@@ -58,7 +58,11 @@ router.post("/login", async (req, res) => {
     res.status(200).send({
       message: "Successfully logged in",
       isAdmin: admin.isAdmin,
+      firstName: admin.firstName,
+      id: admin._id.toString(),
     });
+
+    console.log(admin);
   } catch (error) {
     res.status(500).send(error);
   }

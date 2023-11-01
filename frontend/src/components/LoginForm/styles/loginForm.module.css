@@ -52,10 +52,6 @@ input[type="email"] {
   text-align: end;
 }
 
-.error {
-  border: 2px solid red !important;
-}
-
 @media only screen and (max-width: 500px) {
   input[type="text"],
   input[type="email"],

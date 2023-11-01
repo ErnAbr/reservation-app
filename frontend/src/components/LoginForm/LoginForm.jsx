@@ -4,6 +4,7 @@ import styles from "./styles/loginForm.module.css";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { LoginContext } from "../../services/LoginProvider";
+import { Input } from "../Input/Input";
 
 export const LoginForm = () => {
   const { login, loading, error } = useContext(LoginContext);
@@ -41,35 +42,15 @@ export const LoginForm = () => {
         {() => (
           <Form>
             <div className={styles.formControl}>
-              <label htmlFor="email">E-Mail</label>
-              <Field name="email">
-                {({ field, meta }) => (
-                  <input
-                    {...field}
-                    type="email"
-                    id="email"
-                    className={`${
-                      meta.touched && meta.error ? styles.error : ""
-                    }`}
-                  />
-                )}
-              </Field>
+              <Input labelName="E-Mail" name="email" type="email" id="email" />
             </div>
-
             <div className={styles.formControl}>
-              <label htmlFor="password">Password</label>
-              <Field name="password">
-                {({ field, meta }) => (
-                  <input
-                    {...field}
-                    type="text"
-                    id="password"
-                    className={`${
-                      meta.touched && meta.error ? styles.error : ""
-                    }`}
-                  />
-                )}
-              </Field>
+              <Input
+                labelName="Password"
+                name="password"
+                type="text"
+                id="password"
+              />
             </div>
             <div className={styles.callToRegister}>
               You Can Register <Link to="/register">Here</Link>
