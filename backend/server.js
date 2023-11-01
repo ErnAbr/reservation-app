@@ -3,23 +3,27 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDb = require("./config/database");
 const { API } = require("./constants/constants");
+const { ADMIN_API } = require("./constants/constants");
+const { ORIGIN } = require("./constants/constants");
 
 require("dotenv").config();
 
 connectDb();
 const server = express();
+const userController = require("./controllers/userController");
 const adminController = require("./controllers/adminController");
 
 server.use(express.json());
 server.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: ORIGIN,
     credentials: true,
   })
 );
 server.use(cookieParser());
 
-server.use(API, adminController);
+server.use(API, userController);
+server.use(ADMIN_API, adminController);
 
 const PORT = 3005;
 
