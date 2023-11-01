@@ -1,3 +1,12 @@
+import { useContext } from "react";
+import { LoginContext } from "../../services/useLogin";
+
 export const Client = () => {
-  return <section>this page is only visible for logged in clients</section>;
+  const { isAdmin } = useContext(LoginContext);
+
+  if (isAdmin || isAdmin === null) {
+    return <div>This Page is Accessible Only to Clients</div>;
+  }
+
+  return <section>Welcome Client</section>;
 };

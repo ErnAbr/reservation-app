@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { createContext, useState } from "react";
 import { LOGIN_API } from "../assets/constants/constants";
 
-export const useLogin = () => {
+export const LoginContext = createContext({
+  isAdmin: null,
+  loading: false,
+  error: null,
+  data: null,
+  login: async () => {},
+});
+
+export const LoginProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(null);
 
   const login = async (values) => {
     setLoading(true);
@@ -26,11 +35,16 @@ export const useLogin = () => {
       }
 
       setData(responseData);
+      setIsAdmin(responseData.isAdmin);
     } catch (error) {
       setError(error);
     } finally {
       setLoading(false);
     }
   };
-  return [login, { loading, error, data }];
+  return (
+    <LoginContext.Provider value={{ isAdmin, loading, error, data, login }}>
+      {children}
+    </LoginContext.Provider>
+  );
 };

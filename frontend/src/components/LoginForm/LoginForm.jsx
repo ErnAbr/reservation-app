@@ -1,19 +1,12 @@
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import styles from "./styles/loginForm.module.css";
-import { useLogin } from "../../services/useLogin";
-import { useEffect } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { LoginContext } from "../../services/useLogin";
 
 export const LoginForm = () => {
-  const [login, { loading, error, data }] = useLogin();
-
-  useEffect(() => {
-    if (data) {
-      alert(data.message);
-    }
-    console.log(data.isAdmin);
-  }, [data]);
+  const { login, loading, error } = useContext(LoginContext);
 
   if (loading) {
     return <div>Loading...</div>;
