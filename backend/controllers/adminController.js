@@ -34,18 +34,17 @@ router.post("/login", async (req, res) => {
     const admin = await AdminReg.findOne({ email: req.body.email });
 
     if (!admin) {
-      return res.status(401).send({ message: "Invalid email or password" });
+      return res.status(401).send({ message: "Invalid email" });
     }
 
     const isMatch = await bcrypt.compare(req.body.password, admin.password);
 
     if (!isMatch) {
-      return res.status(401).send({ message: "Invalid email or password" });
+      return res.status(401).send({ message: "Invalid password" });
     }
 
     const payload = {
-      adminId: admin._id,
-      email: admin.email,
+      isAdmin: admin.isAdmin,
     };
     const jwtSecret = process.env.JWT_SECRET;
     const token = jwt.sign(payload, jwtSecret);
@@ -56,7 +55,10 @@ router.post("/login", async (req, res) => {
       sameSite: "strict",
     });
 
-    res.status(200).send({ message: "Successfully logged in", token });
+    res.status(200).send({
+      message: "Successfully logged in",
+      isAdmin: admin.isAdmin,
+    });
   } catch (error) {
     res.status(500).send(error);
   }
