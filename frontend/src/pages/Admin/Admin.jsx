@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { LoginContext } from "../../services/useLogin";
+import { LoginContext } from "../../services/LoginProvider";
 
 export const Admin = () => {
   const { isAdmin } = useContext(LoginContext);

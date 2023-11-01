@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import styles from "./styles/loginForm.module.css";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { LoginContext } from "../../services/useLogin";
+import { LoginContext } from "../../services/LoginProvider";
 
 export const LoginForm = () => {
   const { login, loading, error } = useContext(LoginContext);
