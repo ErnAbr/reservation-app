@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { LOGOUT_API } from "../assets/constants/constants";
 
-export const useLogout = (resetData) => {
+export const useLogout = (setData) => {
   const logoutFunction = useCallback(async () => {
     try {
       const response = await fetch(LOGOUT_API, {
@@ -17,11 +17,11 @@ export const useLogout = (resetData) => {
       }
 
       localStorage.removeItem("isAdmin");
-      resetData(null);
+      setData(null);
     } catch (error) {
       console.error("Logout error:", error);
     }
-  }, [resetData]);
+  }, [setData]);
 
   return logoutFunction;
 };
