@@ -1,10 +1,10 @@
 import styles from "./app.module.css";
-import { Route, Routes } from "react-router-dom";
 import { Login } from "./pages/Login/Login";
 import { Register } from "./pages/Register/Register";
 import { Admin } from "./pages/Admin/Admin";
-import { Header } from "./components/Header/Header";
 import { Client } from "./pages/Client/Client";
+import { Routes, Route } from "react-router-dom";
+import { Header } from "./components/Header/Header";
 
 function App() {
   return (

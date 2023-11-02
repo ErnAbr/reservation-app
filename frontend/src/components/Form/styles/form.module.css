@@ -8,22 +8,6 @@ form div {
   margin-bottom: 2%;
 }
 
-form button {
-  padding: 20px 45px;
-  border: none;
-  background-color: #b0b0b0;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: bold;
-  border-radius: 25px;
-  margin-top: 10px;
-}
-
-form button:hover {
-  cursor: pointer;
-  background-color: rgb(121, 119, 119);
-}
-
 label {
   font-weight: bold;
   display: flex;
@@ -50,10 +34,6 @@ input[type="email"] {
   width: 400px;
   margin-bottom: 10px;
   text-align: end;
-}
-
-.error {
-  border: 2px solid red !important;
 }
 
 @media only screen and (max-width: 500px) {
