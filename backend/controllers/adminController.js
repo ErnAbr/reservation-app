@@ -25,7 +25,7 @@ router.get("/", isAdmin, async (req, res) => {
   try {
     return res.status(200).send({ message: "all good" });
   } catch (error) {
-    return res.status(500).send({ message: "check error" });
+    return res.status(500).send({ message: "Internal Server Error" });
   }
 });
 
