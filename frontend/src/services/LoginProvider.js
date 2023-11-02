@@ -16,7 +16,15 @@ export const LoginProvider = ({ children }) => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
+
+  let initialData;
+  try {
+    initialData = JSON.parse(localStorage.getItem("data"));
+  } catch (error) {
+    console.log("Error parsing JSON from localStorage", error);
+    initialData = null;
+  }
+  const [data, setData] = useState(initialData);
   const [isAdmin, setIsAdmin] = useState(
     initialIsAdmin === "true" ? true : initialIsAdmin === "false" ? false : null
   );
@@ -45,6 +53,7 @@ export const LoginProvider = ({ children }) => {
       if (responseData && responseData.isAdmin !== undefined) {
         setIsAdmin(responseData.isAdmin);
         localStorage.setItem("isAdmin", responseData.isAdmin.toString());
+        localStorage.setItem("data", JSON.stringify(responseData));
       }
     } catch (error) {
       setError(error);

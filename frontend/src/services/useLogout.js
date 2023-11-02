@@ -17,6 +17,7 @@ export const useLogout = (setData) => {
       }
 
       localStorage.removeItem("isAdmin");
+      localStorage.removeItem("data");
       setData(null);
     } catch (error) {
       console.error("Logout error:", error);
