@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { LoginForm } from "../../components/LoginForm/LoginForm";
+import { LoginForm } from "../../components/Form/LoginForm";
 import { LoginContext } from "../../services/LoginProvider";
 import { useNavigate } from "react-router-dom";
 

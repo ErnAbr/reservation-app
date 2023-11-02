@@ -61,8 +61,6 @@ router.post("/login", async (req, res) => {
       firstName: admin.firstName,
       id: admin._id.toString(),
     });
-
-    console.log(admin);
   } catch (error) {
     res.status(500).send(error);
   }

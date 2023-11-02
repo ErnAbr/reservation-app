@@ -1,10 +1,11 @@
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import styles from "./styles/loginForm.module.css";
+import styles from "./styles/form.module.css";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { LoginContext } from "../../services/LoginProvider";
 import { Input } from "../Input/Input";
+import { Button } from "../Button/Button";
 
 export const LoginForm = () => {
   const { login, loading, error } = useContext(LoginContext);
@@ -39,25 +40,23 @@ export const LoginForm = () => {
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
-        {() => (
-          <Form>
-            <div className={styles.formControl}>
-              <Input labelName="E-Mail" name="email" type="email" id="email" />
-            </div>
-            <div className={styles.formControl}>
-              <Input
-                labelName="Password"
-                name="password"
-                type="text"
-                id="password"
-              />
-            </div>
-            <div className={styles.callToRegister}>
-              You Can Register <Link to="/register">Here</Link>
-            </div>
-            <button type="submit">Submit</button>
-          </Form>
-        )}
+        <Form>
+          <div className={styles.formControl}>
+            <Input labelName="E-Mail" name="email" type="email" id="email" />
+          </div>
+          <div className={styles.formControl}>
+            <Input
+              labelName="Password"
+              name="password"
+              type="text"
+              id="password"
+            />
+          </div>
+          <div className={styles.callToRegister}>
+            You Can Register <Link to="/register">Here</Link>
+          </div>
+          <Button type="submit" btnName="Submit" className="btnStyle" />
+        </Form>
       </Formik>
     </>
   );
