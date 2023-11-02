@@ -1,8 +1,9 @@
 import styles from "./app.module.css";
-import { Route, Routes } from "react-router-dom";
 import { Login } from "./pages/Login/Login";
 import { Register } from "./pages/Register/Register";
 import { Admin } from "./pages/Admin/Admin";
+import { Client } from "./pages/Client/Client";
+import { Routes, Route } from "react-router-dom";
 import { Header } from "./components/Header/Header";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/client" element={<Client />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>
       </main>
