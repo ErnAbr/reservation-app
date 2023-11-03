@@ -14,8 +14,10 @@ label {
   margin-bottom: 5px;
 }
 
+input[type="password"],
+input[type="email"],
 input[type="text"],
-input[type="email"] {
+input[type="number"] {
   width: 400px;
   padding: 6px 12px;
   line-height: 1.5;
@@ -37,8 +39,10 @@ input[type="email"] {
 }
 
 @media only screen and (max-width: 500px) {
-  input[type="text"],
+  input[type="password"],
   input[type="email"],
+  input[type="text"],
+  input[type="number"],
   .callToRegister {
     max-width: 200px;
     font-size: 1.2rem;

@@ -1,0 +1,23 @@
+.radioControl {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.radioInputWrapper {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+input[type="radio"] {
+  margin-right: 10px;
+}
+
+@media only screen and (max-width: 500px) {
+  .radioInputWrapper {
+    max-width: 200px;
+    font-size: 1.2rem;
+  }
+}

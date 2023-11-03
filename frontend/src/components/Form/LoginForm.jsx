@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { LoginContext } from "../../services/LoginProvider";
 import { Input } from "../Input/Input";
 import { Button } from "../Button/Button";
+import { emailRegex } from "../../assets/constants/constants";
 
 export const LoginForm = () => {
   const { login, loading, error } = useContext(LoginContext);
@@ -19,13 +20,14 @@ export const LoginForm = () => {
     password: "",
   };
 
-  const validationSchema = Yup.object({
-    email: Yup.string().email("invalid email").required("required"),
-    password: Yup.string().required("required"),
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().matches(emailRegex).required(),
+    password: Yup.string().required(),
   });
 
   const onSubmit = async (values, { resetForm }) => {
-    await login(values);
+    const { email, password } = values;
+    await login({ email: email.toLowerCase(), password });
     if (error) {
       console.error(error);
     }
@@ -48,7 +50,7 @@ export const LoginForm = () => {
             <Input
               labelName="Password"
               name="password"
-              type="text"
+              type="password"
               id="password"
             />
           </div>

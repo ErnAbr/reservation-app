@@ -5,11 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
   const { isAdmin, data } = useContext(LoginContext);
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (data) {
+    if (data && isAdmin === null) {
       alert(data.message);
     }
 
@@ -20,7 +19,7 @@ export const Login = () => {
         navigate("/client");
       }
     }
-  }, [data, isAdmin, navigate]);
+  });
 
   return (
     <section>
