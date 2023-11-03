@@ -33,11 +33,9 @@ export const RegForm = () => {
     lastName: Yup.string().required(),
     phoneNumber: Yup.string()
       .required()
-      .test("isNumber", "Must be a number", (val) => !isNaN(val))
-      .test("isPositive", "Must be positive", (val) => val > 0)
-      .test("isInteger", "Must be an integer", (val) =>
-        Number.isInteger(Number(val))
-      ),
+      .test((val) => !isNaN(val))
+      .test((val) => val > 0)
+      .test((val) => Number.isInteger(Number(val))),
     password: Yup.string().required(),
     repPassword: Yup.string()
       .oneOf([Yup.ref("password")], "Passwords Do Not Match")

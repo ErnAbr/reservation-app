@@ -20,6 +20,7 @@ export const usePost = () => {
         return result;
       } else {
         setData(result.message);
+        setError(null);
         return result;
       }
     } catch (error) {
