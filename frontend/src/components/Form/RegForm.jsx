@@ -33,9 +33,7 @@ export const RegForm = () => {
     lastName: Yup.string().required(),
     phoneNumber: Yup.string()
       .required()
-      .test((val) => !isNaN(val))
-      .test((val) => val > 0)
-      .test((val) => Number.isInteger(Number(val))),
+      .test((value) => /^\+?\d+$/.test(value)),
     password: Yup.string().required(),
     repPassword: Yup.string()
       .oneOf([Yup.ref("password")], "Passwords Do Not Match")
@@ -46,6 +44,9 @@ export const RegForm = () => {
   const onSubmit = async (values) => {
     const submitValues = {
       ...values,
+      email: values.email.toLowerCase(),
+      firstName: values.firstName.toLowerCase(),
+      lastName: values.lastName.toLowerCase(),
       isAdmin: values.isUserAdmin === "true",
     };
 
