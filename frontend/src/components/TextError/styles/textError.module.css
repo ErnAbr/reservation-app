@@ -1,0 +1,9 @@
+.error,
+.errorRadio {
+  color: red;
+  text-align: start;
+}
+
+.errorRadio {
+  text-align: start;
+}

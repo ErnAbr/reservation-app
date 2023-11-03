@@ -4,6 +4,7 @@ import styles from "./styles/header.module.css";
 import { useContext, useState } from "react";
 import { LoginContext } from "../../services/LoginProvider";
 import { useLogout } from "../../services/useLogout";
+import { LOGOUT_API } from "../../assets/constants/constants";
 
 export const Navigation = () => {
   const [isActive, setIsActive] = useState(false);
@@ -11,7 +12,7 @@ export const Navigation = () => {
   const { isAdmin, setData, setIsAdmin } = useContext(LoginContext);
 
   const navigate = useNavigate();
-  const logout = useLogout(setData);
+  const logout = useLogout(setData, LOGOUT_API);
 
   const handleLogout = async () => {
     setIsActive(false);

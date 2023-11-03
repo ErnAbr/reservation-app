@@ -1,8 +1,5 @@
-import { useCallback } from "react";
-import { LOGOUT_API } from "../assets/constants/constants";
-
-export const useLogout = (setData) => {
-  const logoutFunction = useCallback(async () => {
+export const useLogout = (setData, LOGOUT_API) => {
+  const logoutFunction = async () => {
     try {
       const response = await fetch(LOGOUT_API, {
         method: "POST",
@@ -22,7 +19,7 @@ export const useLogout = (setData) => {
     } catch (error) {
       console.error("Logout error:", error);
     }
-  }, [setData]);
+  };
 
   return logoutFunction;
 };

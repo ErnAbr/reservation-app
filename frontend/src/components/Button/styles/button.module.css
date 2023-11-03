@@ -13,3 +13,9 @@
   cursor: pointer;
   background-color: rgb(121, 119, 119);
 }
+
+@media only screen and (max-width: 500px) {
+  .btnStyle {
+    padding: 10px 25px;
+  }
+}
