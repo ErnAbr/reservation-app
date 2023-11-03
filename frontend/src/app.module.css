@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Mulish:wght@500&display=swap");
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   background-color: #faf3e0;
 }

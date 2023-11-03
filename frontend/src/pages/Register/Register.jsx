@@ -1,3 +1,9 @@
+import { RegForm } from "../../components/Form/RegForm";
+
 export const Register = () => {
-  return <section>This is Register Page</section>;
+  return (
+    <section>
+      <RegForm />
+    </section>
+  );
 };

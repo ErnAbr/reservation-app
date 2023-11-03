@@ -23,7 +23,11 @@ router.post("/register", async (req, res) => {
     });
 
     await newAdmin.save();
-    res.status(200).send({ message: "Admin has been created" });
+    if (newAdmin.isAdmin) {
+      res.status(200).send({ message: "Admin has been created" });
+    } else {
+      res.status(200).send({ message: "Client has been created" });
+    }
   } catch (error) {
     res.status(500).send(error);
   }
