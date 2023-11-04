@@ -11,7 +11,6 @@ export const Login = () => {
     if (data && isAdmin === null) {
       alert(data.message);
     }
-
     if (isAdmin !== null) {
       if (isAdmin) {
         navigate("/admin");
