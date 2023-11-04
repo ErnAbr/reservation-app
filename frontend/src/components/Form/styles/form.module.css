@@ -28,10 +28,6 @@ input[type="number"] {
   border-radius: 4px;
 }
 
-.form-control {
-  margin-bottom: 20px;
-}
-
 .callToRegister {
   width: 400px;
   margin-bottom: 10px;

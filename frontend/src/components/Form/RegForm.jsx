@@ -1,6 +1,5 @@
-import { Formik, Form, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import styles from "./styles/form.module.css";
 import { emailRegex } from "../../assets/constants/constants";
 import { userRoleOptions } from "../../assets/constants/constants";
 import { Button } from "../Button/Button";
@@ -80,61 +79,46 @@ export const RegForm = () => {
         onSubmit={onSubmit}
       >
         <Form>
-          <div className={styles.formControl}>
-            <Input labelName="E-Mail" name="email" type="email" id="email" />
-          </div>
-          <div className={styles.formControl}>
-            <Input
-              labelName="First Name"
-              name="firstName"
-              type="text"
-              id="firstName"
-            />
-          </div>
-          <div className={styles.formControl}>
-            <Input
-              labelName="Last Name"
-              name="lastName"
-              type="text"
-              id="lastName"
-            />
-          </div>
-          <div className={styles.formControl}>
-            <Input
-              labelName="Phone Number"
-              name="phoneNumber"
-              type="text"
-              id="phoneNumber"
-            />
-          </div>
-          <div className={styles.formControl}>
-            <Input
-              labelName="Password"
-              name="password"
-              type="password"
-              id="password"
-            />
-          </div>
-          <div className={styles.formControl}>
-            <Input
-              labelName="Repeat Password"
-              name="repPassword"
-              type="password"
-              id="repPassword"
-            />
-            <ErrorMessage
-              name="repPassword"
-              component={() => <TextError name="repPassword" />}
-            />
-          </div>
-          <div className={styles.formControl}>
-            <RadioInput
-              label="Select Your Role"
-              name="isUserAdmin"
-              options={userRoleOptions}
-            />
-            <ErrorMessage name="isUserAdmin" component={TextErrorRadio} />
-          </div>
+          <Input labelName="E-Mail" name="email" type="email" id="email" />
+          <Input
+            labelName="First Name"
+            name="firstName"
+            type="text"
+            id="firstName"
+          />
+          <Input
+            labelName="Last Name"
+            name="lastName"
+            type="text"
+            id="lastName"
+          />
+          <Input
+            labelName="Phone Number"
+            name="phoneNumber"
+            type="text"
+            id="phoneNumber"
+          />
+          <Input
+            labelName="Password"
+            name="password"
+            type="password"
+            id="password"
+          />
+          <Input
+            labelName="Repeat Password"
+            name="repPassword"
+            type="password"
+            id="repPassword"
+            errorMsg={true}
+            component={() => <TextError name="repPassword" />}
+          />
+          <RadioInput
+            label="Select Your Role"
+            name="isUserAdmin"
+            options={userRoleOptions}
+            errorMsg={true}
+            component={TextErrorRadio}
+          />
           <Button type="submit" btnName="Register" className="btnStyle" />
         </Form>
       </Formik>
