@@ -1,10 +1,17 @@
 import styles from "./styles/radioInput.module.css";
 import React from "react";
-import { Field } from "formik";
+import { Field, ErrorMessage } from "formik";
 
-export const RadioInput = ({ label, name, options, ...rest }) => {
+export const RadioInput = ({
+  label,
+  name,
+  options,
+  errorMsg,
+  component,
+  ...rest
+}) => {
   return (
-    <>
+    <div className={styles.formControl}>
       <div className={styles.radioInputWrapper}>
         <label>{label}</label>
         <Field name={name} {...rest}>
@@ -27,7 +34,8 @@ export const RadioInput = ({ label, name, options, ...rest }) => {
             });
           }}
         </Field>
+        {errorMsg && <ErrorMessage name={name} component={component} />}
       </div>
-    </>
+    </div>
   );
 };

@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
-import { Field } from "formik";
+import { ErrorMessage, Field } from "formik";
 import styles from "./styles/input.module.css";
 
-export const Input = ({ type, id, name, labelName }) => {
+export const Input = ({ type, id, name, labelName, errorMsg, component }) => {
   return (
-    <>
+    <div className={styles.formControl}>
       <label htmlFor={name}>{labelName}</label>
       <Field name={name}>
         {({ field, meta }) => (
@@ -16,7 +16,8 @@ export const Input = ({ type, id, name, labelName }) => {
           />
         )}
       </Field>
-    </>
+      {errorMsg && <ErrorMessage name={name} component={component} />}
+    </div>
   );
 };
 

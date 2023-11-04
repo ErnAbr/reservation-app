@@ -43,17 +43,13 @@ export const LoginForm = () => {
         onSubmit={onSubmit}
       >
         <Form>
-          <div className={styles.formControl}>
-            <Input labelName="E-Mail" name="email" type="email" id="email" />
-          </div>
-          <div className={styles.formControl}>
-            <Input
-              labelName="Password"
-              name="password"
-              type="password"
-              id="password"
-            />
-          </div>
+          <Input labelName="E-Mail" name="email" type="email" id="email" />
+          <Input
+            labelName="Password"
+            name="password"
+            type="password"
+            id="password"
+          />
           <div className={styles.callToRegister}>
             You Can Register <Link to="/register">Here</Link>
           </div>
