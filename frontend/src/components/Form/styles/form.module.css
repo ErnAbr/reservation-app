@@ -40,10 +40,20 @@ input[type="number"] {
   input[type="text"],
   input[type="number"],
   .callToRegister {
-    max-width: 200px;
+    max-width: 300px;
     font-size: 1.2rem;
   }
   .callToRegister {
     text-align: center;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  input[type="password"],
+  input[type="email"],
+  input[type="text"],
+  input[type="number"],
+  .callToRegister {
+    max-width: 200px;
   }
 }

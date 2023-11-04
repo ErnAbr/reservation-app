@@ -4,19 +4,17 @@ import { LoginContext } from "../../services/LoginProvider";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
-  const { isAdmin, data } = useContext(LoginContext);
+  const { isAdmin, justLoggedIn, setJustLoggedIn } = useContext(LoginContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (data && isAdmin === null) {
-      alert(data.message);
+    if (justLoggedIn) {
+      setJustLoggedIn(false);
     }
-    if (isAdmin !== null) {
-      if (isAdmin) {
-        navigate("/admin");
-      } else {
-        navigate("/client");
-      }
+    if (isAdmin === true) {
+      navigate("/admin");
+    } else if (isAdmin === false) {
+      navigate("/client");
     }
   });
 
