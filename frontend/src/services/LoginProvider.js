@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import { LOGIN_API } from "../assets/constants/constants";
+import { usePost } from "./usePost";
 
 export const LoginContext = createContext({
   isAdmin: null,
@@ -9,13 +10,15 @@ export const LoginContext = createContext({
   login: async () => {},
   setIsAdmin: () => {},
   setData: () => {},
+  justLoggedIn: false,
+  setJustLoggedIn: () => {},
 });
 
 export const LoginProvider = ({ children }) => {
   const initialIsAdmin = localStorage.getItem("isAdmin");
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [justLoggedIn, setJustLoggedIn] = useState(false);
 
   let initialData;
   try {
@@ -29,41 +32,43 @@ export const LoginProvider = ({ children }) => {
     initialIsAdmin === "true" ? true : initialIsAdmin === "false" ? false : null
   );
 
+  const { postData } = usePost();
+
   const login = async (values) => {
     setLoading(true);
-
     try {
-      const response = await fetch(LOGIN_API, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-        credentials: "include",
-      });
-
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        return alert(responseData.message);
+      const result = await postData(values, LOGIN_API);
+      if (!result.ok) {
+        setError(result.message);
+        alert(result.message);
       }
-
-      setData(responseData);
-
-      if (responseData && responseData.isAdmin !== undefined) {
-        setIsAdmin(responseData.isAdmin);
-        localStorage.setItem("isAdmin", responseData.isAdmin.toString());
-        localStorage.setItem("data", JSON.stringify(responseData));
+      setData(result);
+      if (result.isAdmin !== undefined) {
+        setIsAdmin(result.isAdmin);
+        localStorage.setItem("isAdmin", result.isAdmin.toString());
+        localStorage.setItem("data", JSON.stringify(result));
+        setJustLoggedIn(true);
       }
     } catch (error) {
       setError(error);
+      alert(error.message);
     } finally {
       setLoading(false);
     }
   };
   return (
     <LoginContext.Provider
-      value={{ isAdmin, loading, error, data, login, setIsAdmin, setData }}
+      value={{
+        isAdmin,
+        loading,
+        error,
+        data,
+        login,
+        setIsAdmin,
+        setData,
+        justLoggedIn,
+        setJustLoggedIn,
+      }}
     >
       {children}
     </LoginContext.Provider>

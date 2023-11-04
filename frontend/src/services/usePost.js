@@ -24,7 +24,7 @@ export const usePost = () => {
         return result;
       }
     } catch (error) {
-      console.error("Registration error:", error);
+      console.error("POST error:", error);
     }
   };
   return { postData, data, error };
