@@ -5,7 +5,7 @@ form {
 }
 
 form div {
-  margin-bottom: 2%;
+  margin-bottom: 1%;
 }
 
 label {
@@ -26,10 +26,6 @@ input[type="number"] {
   background-image: none;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
-
-.form-control {
-  margin-bottom: 20px;
 }
 
 .callToRegister {
