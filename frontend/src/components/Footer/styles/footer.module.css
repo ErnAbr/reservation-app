@@ -1,0 +1,26 @@
+.footerContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+@media only screen and (max-width: 850px) {
+  h3 {
+    margin-top: 15px;
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .footerContainer {
+    justify-content: center;
+  }
+  h3 {
+    margin-top: 25px;
+    font-size: 0.8rem;
+  }
+}
