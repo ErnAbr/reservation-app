@@ -5,8 +5,20 @@ import { Button } from "../Button/Button";
 import { Input } from "../Input/Input";
 import { DatePicker } from "../DatePicker/DatePicker";
 import { TextErrorRadio } from "../TextError/TextErrorRadio";
+import { usePost } from "../../services/usePost";
+import { CLIENT_REG_API } from "../../assets/constants/constants";
+import { LOGOUT_API } from "../../assets/constants/constants";
+import { useContext, useEffect } from "react";
+import { useLogout } from "../../services/useLogout";
+import { useNavigate } from "react-router";
+import { LoginContext } from "../../services/LoginProvider";
 
 export const ClientRegFrom = () => {
+  const { postData, data, error } = usePost();
+  const { setIsAdmin, setData } = useContext(LoginContext);
+  const logout = useLogout(setData, LOGOUT_API);
+  const navigate = useNavigate();
+
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -25,9 +37,28 @@ export const ClientRegFrom = () => {
     registrationDate: Yup.date().nullable().required("required"),
   });
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values, { resetForm }) => {
     console.log(values);
+    await postData(values, CLIENT_REG_API);
+    resetForm();
   };
+
+  useEffect(() => {
+    (async () => {
+      if (error) {
+        alert(error.message);
+        try {
+          setIsAdmin(null);
+          navigate("/");
+          await logout();
+        } catch (logoutError) {
+          console.error("Logout failed:", logoutError);
+        }
+      } else if (data) {
+        alert(data.message);
+      }
+    })();
+  }, [data, error, logout, navigate, setIsAdmin]);
 
   return (
     <>

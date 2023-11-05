@@ -19,7 +19,7 @@ export const usePost = () => {
         setError(result);
         return result;
       } else {
-        setData(result.message);
+        setData(result);
         setError(null);
         return result;
       }
@@ -27,5 +27,5 @@ export const usePost = () => {
       console.error("POST error:", error);
     }
   };
-  return { postData, data, error };
+  return { postData, data, error, setData };
 };

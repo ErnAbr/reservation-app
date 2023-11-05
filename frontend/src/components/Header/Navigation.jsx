@@ -17,8 +17,8 @@ export const Navigation = () => {
   const handleLogout = async () => {
     setIsActive(false);
     setIsAdmin(null);
-    await logout();
     navigate("/");
+    await logout();
   };
 
   const handleHamburger = () => {
