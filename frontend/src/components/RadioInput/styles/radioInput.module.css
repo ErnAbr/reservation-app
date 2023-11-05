@@ -15,9 +15,24 @@ input[type="radio"] {
   margin-right: 10px;
 }
 
-@media only screen and (max-width: 500px) {
+.form-control {
+  margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  .radioInputWrapper {
+    max-width: 300px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .radioInputWrapper {
+    max-width: 250px;
+  }
+}
+
+@media only screen and (max-width: 300px) {
   .radioInputWrapper {
     max-width: 200px;
-    font-size: 1.2rem;
   }
 }

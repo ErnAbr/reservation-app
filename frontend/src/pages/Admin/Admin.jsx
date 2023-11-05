@@ -3,6 +3,7 @@ import { LoginContext } from "../../services/LoginProvider";
 import { Button } from "../../components/Button/Button";
 import { Modal } from "../../components/Modal/Modal";
 import { useNavigate } from "react-router-dom";
+import { ClientRegFrom } from "../../components/Form/ClientRegForm";
 
 export const Admin = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,7 +34,9 @@ export const Admin = () => {
 
       {isModalOpen && (
         <>
-          <Modal setIsModalOpen={setIsModalOpen}>TEST</Modal>
+          <Modal setIsModalOpen={setIsModalOpen}>
+            <ClientRegFrom />
+          </Modal>
         </>
       )}
     </section>
