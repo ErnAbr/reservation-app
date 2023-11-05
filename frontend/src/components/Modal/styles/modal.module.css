@@ -114,7 +114,7 @@
   .modal {
     transform: translate(-50%, -50%);
     width: 65vw;
-    height: 50vh;
+    height: 45vh;
   }
 }
 
@@ -128,14 +128,14 @@
 @media only screen and (min-width: 500px) and (max-width: 600px) {
   .modal {
     width: 450px;
-    height: 75vh;
+    height: 70vh;
   }
 }
 
 @media only screen and (min-width: 450px) and (max-width: 500px) {
   .modal {
     width: 350px;
-    height: 50vh;
+    height: 58vh;
     width: 70vw;
   }
 }
