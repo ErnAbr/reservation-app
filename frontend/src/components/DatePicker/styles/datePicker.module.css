@@ -1,0 +1,20 @@
+.datePickerContainer {
+  width: 100%;
+}
+
+.datePickerWrapper {
+  display: flex;
+}
+
+.datePickerWrapper div {
+  justify-content: flex-start !important;
+}
+
+.datePickerWrapper input {
+  width: 80%;
+  text-indent: 5px;
+}
+
+.datePickerWrapper svg {
+  margin-right: 5px;
+}
