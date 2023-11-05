@@ -27,7 +27,7 @@ router.post("/register", isAdmin, async (req, res) => {
   console.log(req.body.registrationDate);
   try {
     const client = new Client(req.body);
-    const savedClient = await client.save();
+    // const savedClient = await client.save();
     return res.status(200).send({ message: "Reservation Done" });
   } catch (error) {
     console.error("Error saving client:", error);

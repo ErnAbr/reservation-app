@@ -10,6 +10,11 @@ body {
   background-color: #faf3e0;
 }
 
+h2,
+h4 {
+  margin: 20px 0;
+}
+
 .appContainer {
   font-family: "Mulish", sans-serif;
   width: 1028px;
