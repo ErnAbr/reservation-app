@@ -1,18 +1,26 @@
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles/header.module.css";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LoginContext } from "../../services/LoginProvider";
 import { useLogout } from "../../services/useLogout";
 import { LOGOUT_API } from "../../assets/constants/constants";
 
 export const Navigation = () => {
   const [isActive, setIsActive] = useState(false);
-
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { isAdmin, setData, setIsAdmin } = useContext(LoginContext);
 
   const navigate = useNavigate();
   const logout = useLogout(setData, LOGOUT_API);
+
+  const disableScroll = () => {
+    document.body.style.overflow = "hidden";
+  };
+
+  const enableScroll = () => {
+    document.body.style.overflow = "";
+  };
 
   const handleLogout = async () => {
     setIsActive(false);
@@ -23,11 +31,21 @@ export const Navigation = () => {
 
   const handleHamburger = () => {
     setIsActive((prevIsActive) => !prevIsActive);
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   const handleNavLinkClick = () => {
     setIsActive(false);
+    setIsDropdownOpen(!isDropdownOpen);
   };
+
+  useEffect(() => {
+    if (isDropdownOpen) {
+      disableScroll();
+    } else {
+      enableScroll();
+    }
+  }, [isDropdownOpen]);
 
   return (
     <nav>

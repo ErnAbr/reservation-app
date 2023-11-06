@@ -9,9 +9,9 @@ h3 {
 }
 
 @media only screen and (max-width: 850px) {
-  h3 {
+  .footerHeading {
     margin-top: 15px;
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 }
 
@@ -19,7 +19,7 @@ h3 {
   .footerContainer {
     justify-content: center;
   }
-  h3 {
+  .footerHeading {
     margin-top: 25px;
     font-size: 0.8rem;
   }

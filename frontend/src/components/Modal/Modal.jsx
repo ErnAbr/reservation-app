@@ -10,7 +10,9 @@ export const Modal = ({ children, setIsModalOpen }) => {
       <div className={styles.modal}>
         <button
           className={styles.modalCloseButton}
-          onClick={() => setIsModalOpen(false)}
+          onClick={() => {
+            setIsModalOpen(false);
+          }}
         >
           X
         </button>

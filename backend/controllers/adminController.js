@@ -24,10 +24,10 @@ function isAdmin(req, res, next) {
 }
 
 router.post("/register", isAdmin, async (req, res) => {
-  console.log(req.body.registrationDate);
+  // console.log(req.body.registrationDate);
   try {
     const client = new Client(req.body);
-    // const savedClient = await client.save();
+    const savedClient = await client.save();
     return res.status(200).send({ message: "Reservation Done" });
   } catch (error) {
     console.error("Error saving client:", error);
@@ -39,7 +39,26 @@ router.post("/register", isAdmin, async (req, res) => {
 
 router.get("/", isAdmin, async (req, res) => {
   try {
-    return res.status(200).send({ message: "all good" });
+    const dateString = req.query.date;
+    if (!dateString) {
+      return res.status(400).send({ message: "No date provided" });
+    }
+
+    const date = new Date(dateString);
+    const endOfDay = new Date(date);
+    date.setUTCHours(0, 0, 0, 0);
+    endOfDay.setUTCHours(24, 0, 0, 0);
+
+    const records = await Client.find({
+      registrationDate: {
+        $gte: date,
+        $lt: endOfDay,
+      },
+    });
+
+    return res
+      .status(200)
+      .send({ message: "Records have been fetched", result: records });
   } catch (error) {
     return res.status(500).send({ message: "Internal Server Error" });
   }
