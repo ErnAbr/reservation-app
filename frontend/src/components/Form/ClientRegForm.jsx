@@ -7,17 +7,10 @@ import { DatePicker } from "../DatePicker/DatePicker";
 import { TextErrorRadio } from "../TextError/TextErrorRadio";
 import { usePost } from "../../services/usePost";
 import { CLIENT_REG_API } from "../../assets/constants/constants";
-import { LOGOUT_API } from "../../assets/constants/constants";
-import { useContext, useEffect } from "react";
-import { useLogout } from "../../services/useLogout";
-import { useNavigate } from "react-router";
-import { LoginContext } from "../../services/LoginProvider";
+import { useEffect } from "react";
 
-export const ClientRegFrom = () => {
+export const ClientRegFrom = ({ setIsModalOpen }) => {
   const { postData, data, error } = usePost();
-  const { setIsAdmin, setData } = useContext(LoginContext);
-  const logout = useLogout(setData, LOGOUT_API);
-  const navigate = useNavigate();
 
   const initialValues = {
     firstName: "",
@@ -38,27 +31,18 @@ export const ClientRegFrom = () => {
   });
 
   const onSubmit = async (values, { resetForm }) => {
-    console.log(values);
     await postData(values, CLIENT_REG_API);
     resetForm();
   };
 
   useEffect(() => {
-    (async () => {
-      if (error) {
-        alert(error.message);
-        try {
-          setIsAdmin(null);
-          navigate("/");
-          await logout();
-        } catch (logoutError) {
-          console.error("Logout failed:", logoutError);
-        }
-      } else if (data) {
-        alert(data.message);
-      }
-    })();
-  }, [data, error, logout, navigate, setIsAdmin]);
+    if (data) {
+      alert(data.message);
+      setIsModalOpen(false);
+    } else if (error) {
+      alert(error.message);
+    }
+  });
 
   return (
     <>

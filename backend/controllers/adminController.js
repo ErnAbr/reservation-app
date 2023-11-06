@@ -64,4 +64,20 @@ router.get("/", isAdmin, async (req, res) => {
   }
 });
 
+router.delete("/", isAdmin, async (req, res) => {
+  try {
+    const deleteReservation = await Client.findOneAndDelete({
+      _id: req.query.id,
+    });
+
+    if (!deleteReservation) {
+      return res.status(404).send({ message: "Reservation not found" });
+    }
+
+    return res.status(200).send({ message: "Reservation has Been Deleted" });
+  } catch (error) {
+    return res.status(500).send({ message: "Internal Server Error" });
+  }
+});
+
 module.exports = router;

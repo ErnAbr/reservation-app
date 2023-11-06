@@ -12,6 +12,7 @@ import { Card } from "../../components/Card/Card";
 
 export const Admin = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [refreshData, setRefreshData] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const { isAdmin, data } = useContext(LoginContext);
   const { reservations, loading, error, getData } = useGet();
@@ -31,10 +32,11 @@ export const Admin = () => {
       const formattedDate = selectedDate.toISOString();
       const DATE_FILTER_API = getApiRouteWithDate(formattedDate);
       await getData(DATE_FILTER_API);
+      setRefreshData(false);
     };
 
     fetchData();
-  }, [selectedDate, getData]);
+  }, [selectedDate, getData, isModalOpen, refreshData]);
 
   if (!data) {
     return <div>LOADING...</div>;
@@ -57,13 +59,18 @@ export const Admin = () => {
         <div className={styles.reservationContainer}>
           {loading && <p>Loading...</p>}
           {error && <p>Error fetching data: {error.message}</p>}
-          {reservations && <Card reservations={reservations.result} />}
+          {reservations && (
+            <Card
+              setRefreshData={setRefreshData}
+              reservations={reservations.result}
+            />
+          )}
         </div>
       </div>
       {isModalOpen && (
         <>
           <Modal setIsModalOpen={setIsModalOpen}>
-            <ClientRegFrom />
+            <ClientRegFrom setIsModalOpen={setIsModalOpen} />
           </Modal>
         </>
       )}
