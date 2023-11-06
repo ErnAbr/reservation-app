@@ -62,7 +62,7 @@ export const RegForm = () => {
 
   useEffect(() => {
     if (data) {
-      alert(data);
+      alert(data.message);
       navigate("/");
     }
     if (error) {

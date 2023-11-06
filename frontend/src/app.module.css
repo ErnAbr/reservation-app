@@ -1,11 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Mulish:wght@500&display=swap");
 
 * {
+  padding: 0;
+  margin: 0;
   box-sizing: border-box;
 }
 
 body {
   background-color: #faf3e0;
+}
+
+h2,
+h3,
+h4 {
+  margin: 20px 0 !important;
 }
 
 .appContainer {
