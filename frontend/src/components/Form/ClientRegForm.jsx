@@ -86,7 +86,7 @@ export const ClientRegForm = ({ setIsModalOpen }) => {
     } else if (error) {
       alert(error.message);
     }
-  });
+  }, [data, error, setIsModalOpen]);
 
   return (
     <>

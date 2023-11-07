@@ -26,6 +26,17 @@ function isAdmin(req, res, next) {
 router.post("/register", isAdmin, async (req, res) => {
   try {
     const client = new Client(req.body);
+    const newDate = new Date(client.registrationDate);
+    newDate.setHours(newDate.getHours() + 2);
+    const hours = newDate.getUTCHours();
+    const minutes = newDate.getUTCMinutes();
+
+    if (hours < 8 || hours > 18 || (hours === 18 && minutes > 0)) {
+      return res
+        .status(400)
+        .send({ message: "Please Select Valid Reservation Time" });
+    }
+
     const savedClient = await client.save();
     return res.status(200).send({ message: "Reservation Done" });
   } catch (error) {
