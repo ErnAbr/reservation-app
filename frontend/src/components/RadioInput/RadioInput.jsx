@@ -1,6 +1,7 @@
 import styles from "./styles/radioInput.module.css";
 import React from "react";
 import { Field, ErrorMessage } from "formik";
+import PropTypes from "prop-types";
 
 export const RadioInput = ({
   label,
@@ -38,4 +39,21 @@ export const RadioInput = ({
       </div>
     </div>
   );
+};
+
+RadioInput.propTypes = {
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.bool,
+      ]).isRequired,
+    })
+  ).isRequired,
+  errorMsg: PropTypes.bool,
+  component: PropTypes.elementType,
 };

@@ -3,6 +3,7 @@ import styles from "./styles/card.module.css";
 import { Modal } from "../Modal/Modal";
 import { deleteApiRouteWithId } from "../../assets/constants/constants";
 import { useDelete } from "../../services/useDelete";
+import PropTypes from "prop-types";
 
 export const Card = ({ reservations, setRefreshData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,7 +20,6 @@ export const Card = ({ reservations, setRefreshData }) => {
   };
 
   const handleReservationDelete = async () => {
-    console.log(reservationId);
     const DELETE_RESERVATION_API = deleteApiRouteWithId(reservationId);
     await deleteData(DELETE_RESERVATION_API);
     setRefreshData(true);
@@ -91,4 +91,18 @@ export const Card = ({ reservations, setRefreshData }) => {
       )}
     </>
   );
+};
+
+Card.propTypes = {
+  reservations: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      firstName: PropTypes.string.isRequired,
+      lastName: PropTypes.string.isRequired,
+      phoneNumber: PropTypes.number.isRequired,
+      email: PropTypes.string.isRequired,
+      registrationDate: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  setRefreshData: PropTypes.func.isRequired,
 };

@@ -3,7 +3,7 @@ import { LoginContext } from "../../services/LoginProvider";
 import { Button } from "../../components/Button/Button";
 import { Modal } from "../../components/Modal/Modal";
 import { useNavigate } from "react-router-dom";
-import { ClientRegFrom } from "../../components/Form/ClientRegForm";
+import { ClientRegForm } from "../../components/Form/ClientRegForm";
 import { DateFilterPicker } from "../../components/DatePicker/DateFilterPicker";
 import { getApiRouteWithDate } from "../../assets/constants/constants";
 import styles from "./styles/admin.module.css";
@@ -70,7 +70,7 @@ export const Admin = () => {
       {isModalOpen && (
         <>
           <Modal setIsModalOpen={setIsModalOpen}>
-            <ClientRegFrom setIsModalOpen={setIsModalOpen} />
+            <ClientRegForm setIsModalOpen={setIsModalOpen} />
           </Modal>
         </>
       )}

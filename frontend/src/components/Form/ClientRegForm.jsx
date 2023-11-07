@@ -11,8 +11,9 @@ import { getBookedDates } from "../../assets/constants/constants";
 import { useEffect } from "react";
 import { useGet } from "../../services/useGet";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
-export const ClientRegFrom = ({ setIsModalOpen }) => {
+export const ClientRegForm = ({ setIsModalOpen }) => {
   const { postData, data, error } = usePost();
   const { getData, reservations } = useGet();
   const [regDateFetch, setRegDateFetch] = useState(new Date());
@@ -135,4 +136,8 @@ export const ClientRegFrom = ({ setIsModalOpen }) => {
       </Formik>
     </>
   );
+};
+
+ClientRegForm.propTypes = {
+  setIsModalOpen: PropTypes.func.isRequired,
 };

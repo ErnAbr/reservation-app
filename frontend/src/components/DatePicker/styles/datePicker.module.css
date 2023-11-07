@@ -18,3 +18,9 @@
 .datePickerWrapper svg {
   margin-right: 5px;
 }
+
+.customDatepicker {
+  overflow: auto;
+  max-width: fit-content;
+  max-height: 300px;
+}
