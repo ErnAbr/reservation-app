@@ -24,7 +24,6 @@ function isAdmin(req, res, next) {
 }
 
 router.post("/register", isAdmin, async (req, res) => {
-  // console.log(req.body.registrationDate);
   try {
     const client = new Client(req.body);
     const savedClient = await client.save();
@@ -34,6 +33,65 @@ router.post("/register", isAdmin, async (req, res) => {
     return res
       .status(500)
       .send({ message: "Internal Server Error", error: error.message });
+  }
+});
+
+router.get("/get-booked-slots/:date", isAdmin, async (req, res) => {
+  try {
+    const selectedDate = req.params.date;
+    const startOfDay = new Date(selectedDate);
+    startOfDay.setHours(2, 0, 0, 0);
+    const endOfDay = new Date(startOfDay);
+    endOfDay.setDate(endOfDay.getDate() + 1);
+
+    const matchStage = {
+      $match: {
+        registrationDate: {
+          $gte: startOfDay,
+          $lt: endOfDay,
+        },
+      },
+    };
+
+    const groupStage = {
+      $group: {
+        _id: {
+          year: { $year: "$registrationDate" },
+          month: { $month: "$registrationDate" },
+          day: { $dayOfMonth: "$registrationDate" },
+          hour: { $hour: "$registrationDate" },
+          minute: { $minute: "$registrationDate" },
+        },
+        count: { $sum: 1 },
+      },
+    };
+
+    const filterCountStage = {
+      $match: {
+        count: { $gte: 2 },
+      },
+    };
+
+    const projectStage = {
+      $project: {
+        year: "$_id.year",
+        month: "$_id.month",
+        day: "$_id.day",
+        hour: "$_id.hour",
+        minute: "$_id.minute",
+      },
+    };
+
+    const bookedSlots = await Client.aggregate([
+      matchStage,
+      groupStage,
+      filterCountStage,
+      projectStage,
+    ]);
+
+    return res.status(200).send({ bookedSlots });
+  } catch (error) {
+    return res.status(500).send({ message: "Internal Server Error" });
   }
 });
 

@@ -7,10 +7,16 @@ import { DatePicker } from "../DatePicker/DatePicker";
 import { TextErrorRadio } from "../TextError/TextErrorRadio";
 import { usePost } from "../../services/usePost";
 import { CLIENT_REG_API } from "../../assets/constants/constants";
+import { getBookedDates } from "../../assets/constants/constants";
 import { useEffect } from "react";
+import { useGet } from "../../services/useGet";
+import { useState } from "react";
 
 export const ClientRegFrom = ({ setIsModalOpen }) => {
   const { postData, data, error } = usePost();
+  const { getData, reservations } = useGet();
+  const [regDateFetch, setRegDateFetch] = useState(new Date());
+  const [disabledTimes, setDisabledTimes] = useState([]);
 
   const initialValues = {
     firstName: "",
@@ -34,6 +40,43 @@ export const ClientRegFrom = ({ setIsModalOpen }) => {
     await postData(values, CLIENT_REG_API);
     resetForm();
   };
+
+  const formatDateAsLocalISOString = (date) => {
+    const offset = date.getTimezoneOffset();
+    const localDate = new Date(date.getTime() - offset * 60 * 1000);
+    return localDate.toISOString().split("T")[0];
+  };
+
+  useEffect(() => {
+    const fetchBookedSlots = async () => {
+      if (regDateFetch) {
+        const formattedDate = formatDateAsLocalISOString(regDateFetch);
+        const BOOKING_API = getBookedDates(formattedDate);
+        await getData(BOOKING_API);
+      }
+    };
+
+    if (regDateFetch) {
+      fetchBookedSlots();
+    }
+  }, [regDateFetch, getData]);
+
+  useEffect(() => {
+    if (reservations?.bookedSlots) {
+      const newDisabledTimes = reservations.bookedSlots.map((slot) => {
+        const date = new Date(
+          slot.year,
+          slot.month,
+          slot.day,
+          slot.hour,
+          slot.minute
+        );
+        date.setHours(date.getHours() + 2);
+        return date;
+      });
+      setDisabledTimes(newDisabledTimes);
+    }
+  }, [reservations]);
 
   useEffect(() => {
     if (data) {
@@ -79,6 +122,8 @@ export const ClientRegFrom = ({ setIsModalOpen }) => {
               onChange={setFieldValue}
               errorMsg={true}
               component={TextErrorRadio}
+              setRegDateFetch={setRegDateFetch}
+              disabledTimes={disabledTimes}
             />
             <Button
               type="submit"
