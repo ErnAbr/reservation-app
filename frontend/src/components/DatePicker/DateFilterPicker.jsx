@@ -6,13 +6,18 @@ import "react-datepicker/dist/react-datepicker.css";
 registerLocale("en-GB", enGb);
 
 export const DateFilterPicker = ({ selectedDate, setSelectedDate }) => {
+  const handleDateChange = (date) => {
+    const dateInEET = new Date(date.getTime() + 2 * 60 * 60 * 1000);
+    setSelectedDate(dateInEET);
+  };
+
   return (
     <DateFilter
       showIcon
       dateFormat="dd/MM/yyyy"
       filterDate={(date) => date.getDay() !== 6 && date.getDay() !== 0}
       locale="en-GB"
-      onChange={(date) => setSelectedDate(date)}
+      onChange={handleDateChange}
       selected={selectedDate}
     />
   );

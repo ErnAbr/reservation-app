@@ -8,6 +8,9 @@ export const getApiRouteWithDate = (formattedDate) => {
 export const deleteApiRouteWithId = (id) => {
   return `http://localhost:3005/api/admin/?id=${id}`;
 };
+export const getBookedDates = (date) => {
+  return `http://localhost:3005/api/admin/get-booked-slots/${date}`;
+};
 export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const userRoleOptions = [
   { key: "Admin", value: "true" },
