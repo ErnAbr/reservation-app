@@ -1,5 +1,6 @@
 import { useFormikContext } from "formik";
 import styles from "./styles/textError.module.css";
+import PropTypes from "prop-types";
 
 export const TextError = ({ name }) => {
   const { values, errors, touched } = useFormikContext();
@@ -15,4 +16,8 @@ export const TextError = ({ name }) => {
   return showPasswordMismatchError ? (
     <div className={styles.error}>{errors[name]}</div>
   ) : null;
+};
+
+TextError.propTypes = {
+  name: PropTypes.string.isRequired,
 };

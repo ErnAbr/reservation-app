@@ -2,6 +2,7 @@ import DateFilter from "react-datepicker";
 import { registerLocale } from "react-datepicker";
 import enGb from "date-fns/locale/en-GB";
 import "react-datepicker/dist/react-datepicker.css";
+import PropTypes from "prop-types";
 
 registerLocale("en-GB", enGb);
 
@@ -21,4 +22,9 @@ export const DateFilterPicker = ({ selectedDate, setSelectedDate }) => {
       selected={selectedDate}
     />
   );
+};
+
+DateFilterPicker.propTypes = {
+  selectedDate: PropTypes.instanceOf(Date),
+  setSelectedDate: PropTypes.func.isRequired,
 };

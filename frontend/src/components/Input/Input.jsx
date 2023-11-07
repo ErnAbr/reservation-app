@@ -26,4 +26,6 @@ Input.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   labelName: PropTypes.string.isRequired,
+  errorMsg: PropTypes.bool,
+  component: PropTypes.elementType,
 };

@@ -6,6 +6,7 @@ import enGb from "date-fns/locale/en-GB";
 import "react-datepicker/dist/react-datepicker.css";
 import { ErrorMessage } from "formik";
 import styles from "./styles/datePicker.module.css";
+import PropTypes from "prop-types";
 
 registerLocale("en-GB", enGb);
 
@@ -46,9 +47,20 @@ export const DatePicker = ({
           id="registrationDate"
           showIcon
           excludeTimes={disabledTimes}
+          popperClassName={styles.customDatepicker}
         />
       </div>
       {errorMsg && <ErrorMessage name={name} component={component} />}
     </div>
   );
+};
+
+DatePicker.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
+  onChange: PropTypes.func.isRequired,
+  errorMsg: PropTypes.bool,
+  component: PropTypes.elementType,
+  setRegDateFetch: PropTypes.func.isRequired,
+  disabledTimes: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
 };
