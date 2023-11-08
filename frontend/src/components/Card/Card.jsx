@@ -20,7 +20,7 @@ export const Card = ({ reservations, setRefreshData }) => {
   const sortedReservations = [...reservations].sort(
     (a, b) => new Date(a.registrationDate) - new Date(b.registrationDate)
   );
-  const { putData, data, putError } = usePut();
+  const { putData, data, putError, setData } = usePut();
   const { refreshDisabledTimes, disabledTimes } = useContext(ReservedContext);
 
   const initialValues = {
@@ -74,10 +74,11 @@ export const Card = ({ reservations, setRefreshData }) => {
   useEffect(() => {
     if (data) {
       alert(data.message);
+      setData(null);
     } else if (putError) {
       alert(putError.message);
     }
-  }, [data, putError]);
+  }, [data, putError, setData]);
 
   return (
     <>
