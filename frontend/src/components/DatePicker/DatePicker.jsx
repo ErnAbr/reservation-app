@@ -31,7 +31,9 @@ export const DatePicker = ({
           selected={value}
           onChange={(date) => {
             onChange(name, date);
-            setRegDateFetch(date);
+            if (setRegDateFetch) {
+              setRegDateFetch(date);
+            }
           }}
           dateFormat="dd/MM/yyyy HH:mm"
           minDate={new Date()}
@@ -61,6 +63,6 @@ DatePicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   errorMsg: PropTypes.bool,
   component: PropTypes.elementType,
-  setRegDateFetch: PropTypes.func.isRequired,
+  setRegDateFetch: PropTypes.func,
   disabledTimes: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
 };

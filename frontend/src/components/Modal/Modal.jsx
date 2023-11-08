@@ -3,17 +3,12 @@ import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import styles from "./styles/modal.module.css";
 
-export const Modal = ({ children, setIsModalOpen }) => {
+export const Modal = ({ children, closeModal }) => {
   return ReactDOM.createPortal(
     <>
       <div className={styles.overlay}></div>
       <div className={styles.modal}>
-        <button
-          className={styles.modalCloseButton}
-          onClick={() => {
-            setIsModalOpen(false);
-          }}
-        >
+        <button className={styles.modalCloseButton} onClick={closeModal}>
           X
         </button>
         {children}
@@ -25,5 +20,5 @@ export const Modal = ({ children, setIsModalOpen }) => {
 
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
-  setIsModalOpen: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
 };
