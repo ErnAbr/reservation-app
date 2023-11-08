@@ -9,6 +9,7 @@
   flex: 0 1 calc(33.333% - 20px);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 5px;
   border: 1px solid black;
   padding: 10px;
@@ -30,11 +31,13 @@
 .cardBtnWrapper {
   display: flex;
   justify-content: space-between;
+  gap: 5px;
 }
 
 .modalBtnWrapper {
   display: flex;
   gap: 15px;
+  align-self: flex-end;
 }
 
 .modalBtnWrapper button {
@@ -45,10 +48,17 @@
   .cardData {
     flex: 0 1 calc(100%);
   }
+  .cardBtnWrapper {
+    flex-direction: column;
+  }
 }
 
-@media only screen and (min-width: 450px) and (max-width: 600px) {
+@media only screen and (min-width: 450px) and (max-width: 900px) {
   .cardData {
-    flex: 1 1 calc(50% - 40px);
+    flex: 0 1 calc(50% - 20px);
+  }
+
+  .cardBtnWrapper {
+    flex-direction: column;
   }
 }
