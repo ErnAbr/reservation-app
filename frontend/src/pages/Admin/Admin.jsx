@@ -69,7 +69,7 @@ export const Admin = () => {
       </div>
       {isModalOpen && (
         <>
-          <Modal setIsModalOpen={setIsModalOpen}>
+          <Modal closeModal={() => setIsModalOpen(false)}>
             <ClientRegForm setIsModalOpen={setIsModalOpen} />
           </Modal>
         </>

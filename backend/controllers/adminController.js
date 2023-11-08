@@ -152,6 +152,38 @@ router.get("/", isAdmin, async (req, res) => {
   }
 });
 
+router.put("/update-reservation", isAdmin, async (req, res) => {
+  try {
+    const { _id, values } = req.body;
+
+    const newDate = new Date(values.registrationDate);
+    newDate.setHours(newDate.getHours() + 2);
+    const hours = newDate.getUTCHours();
+    const minutes = newDate.getUTCMinutes();
+
+    if (hours < 8 || hours > 18 || (hours === 18 && minutes > 0)) {
+      return res
+        .status(400)
+        .send({ message: "Please Select Valid Reservation Time" });
+    }
+
+    const updatedReservation = await Client.findByIdAndUpdate(
+      _id,
+      { $set: { registrationDate: values.registrationDate } },
+      { new: true }
+    );
+    if (updatedReservation) {
+      res
+        .status(200)
+        .send({ message: "Reservation has been updated", updatedReservation });
+    } else {
+      res.status(404).send({ message: "Reservation not found" });
+    }
+  } catch (error) {
+    return res.status(500).send({ message: "Internal Server Error" });
+  }
+});
+
 router.delete("/", isAdmin, async (req, res) => {
   try {
     const deleteReservation = await Client.findOneAndDelete({
