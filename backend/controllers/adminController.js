@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const Client = require("../models/client.model");
-//module.exports.ADMIN_API = "/api/admin";
+
 function isAdmin(req, res, next) {
   try {
     const token = req.cookies.token;
