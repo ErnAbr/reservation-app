@@ -34,9 +34,15 @@ export const Admin = () => {
       await getData(DATE_FILTER_API);
       setRefreshData(false);
     };
-
     fetchData();
-  }, [selectedDate, getData, isModalOpen, refreshData]);
+  }, [
+    selectedDate,
+    getData,
+    isModalOpen,
+    setRefreshData,
+    isAdmin,
+    refreshData,
+  ]);
 
   if (!data) {
     return <div>LOADING...</div>;
