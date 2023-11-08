@@ -1,12 +1,14 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { getBookedDates } from "../assets/constants/constants";
 import { useGet } from "./useGet";
+import { LoginContext } from "./LoginProvider";
 
 export const ReservedContext = createContext({
   disabledTimes: [],
   setRegDateFetch: () => {},
   reservedDates: [],
   refreshDisabledTimes: () => {},
+  setTriggerRefresh: () => {},
 });
 
 export const ReservedDateProvider = ({ children }) => {
@@ -16,6 +18,7 @@ export const ReservedDateProvider = ({ children }) => {
   const [triggerRefresh, setTriggerRefresh] = useState(false);
 
   const { getData, reservations } = useGet();
+  const { isAdmin } = useContext(LoginContext);
 
   const refreshDisabledTimes = () => {
     setTriggerRefresh((prev) => !prev);
@@ -29,14 +32,20 @@ export const ReservedDateProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchBookedSlots = async () => {
-      const formattedDate = formatDateAsLocalISOString(regDateFetch);
-      const BOOKING_API = getBookedDates(formattedDate);
-      const bookedSlots = await getData(BOOKING_API);
-      setReservedDates(bookedSlots);
+      if (isAdmin !== null) {
+        const formattedDate = formatDateAsLocalISOString(regDateFetch);
+        const BOOKING_API = getBookedDates(formattedDate);
+        try {
+          const bookedSlots = await getData(BOOKING_API);
+          setReservedDates(bookedSlots);
+        } catch (error) {
+          console.error("Failed to fetch booked slots:", error);
+        }
+      }
     };
 
     fetchBookedSlots();
-  }, [regDateFetch, getData, triggerRefresh]);
+  }, [regDateFetch, getData, triggerRefresh, isAdmin]);
 
   useEffect(() => {
     if (reservations?.bookedSlots) {
@@ -53,13 +62,14 @@ export const ReservedDateProvider = ({ children }) => {
       });
       setDisabledTimes(newDisabledTimes);
     }
-  }, [reservations]);
+  }, [reservations, triggerRefresh]);
 
   const contextValue = {
     disabledTimes,
     setRegDateFetch,
     reservedDates,
     refreshDisabledTimes,
+    setTriggerRefresh,
   };
 
   return (

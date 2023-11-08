@@ -20,8 +20,9 @@ export const Card = ({ reservations, setRefreshData }) => {
   const sortedReservations = [...reservations].sort(
     (a, b) => new Date(a.registrationDate) - new Date(b.registrationDate)
   );
-  const { putData, data, putError, setData } = usePut();
-  const { refreshDisabledTimes, disabledTimes } = useContext(ReservedContext);
+  const { putData, data, putError } = usePut();
+  const { refreshDisabledTimes, disabledTimes, setRegDateFetch } =
+    useContext(ReservedContext);
 
   const initialValues = {
     registrationDate: null,
@@ -36,15 +37,16 @@ export const Card = ({ reservations, setRefreshData }) => {
       _id: reservationId,
       values: values,
     };
+    refreshDisabledTimes();
     await putData(changeReservetionData, CLIENT_PUT_API);
     resetForm();
-    refreshDisabledTimes();
     setRefreshData(true);
     setUpdateReservationModal(false);
   };
 
   const handleReservationChangeClick = (id) => {
     setReservationId(id);
+    refreshDisabledTimes();
     setUpdateReservationModal(true);
   };
 
@@ -74,11 +76,10 @@ export const Card = ({ reservations, setRefreshData }) => {
   useEffect(() => {
     if (data) {
       alert(data.message);
-      setData(null);
     } else if (putError) {
       alert(putError.message);
     }
-  }, [data, putError, setData]);
+  }, [data, putError]);
 
   return (
     <>
@@ -156,6 +157,7 @@ export const Card = ({ reservations, setRefreshData }) => {
                         name="registrationDate"
                         value={values.registrationDate}
                         onChange={setFieldValue}
+                        setRegDateFetch={setRegDateFetch}
                         disabledTimes={disabledTimes}
                       />
                       <div className={styles.modalBtnWrapper}>
