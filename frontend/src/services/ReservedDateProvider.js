@@ -32,7 +32,7 @@ export const ReservedDateProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchBookedSlots = async () => {
-      if (isAdmin !== null) {
+      if (isAdmin) {
         const formattedDate = formatDateAsLocalISOString(regDateFetch);
         const BOOKING_API = getBookedDates(formattedDate);
         try {
