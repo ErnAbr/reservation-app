@@ -167,6 +167,25 @@ router.put("/update-reservation", isAdmin, async (req, res) => {
         .send({ message: "Please Select Valid Reservation Time" });
     }
 
+    const registrationDate = new Date(values.registrationDate);
+    const startOfMinute = new Date(registrationDate);
+    startOfMinute.setSeconds(0, 0);
+    const endOfMinute = new Date(startOfMinute);
+    endOfMinute.setMinutes(endOfMinute.getMinutes() + 1);
+
+    const count = await Client.countDocuments({
+      registrationDate: {
+        $gte: startOfMinute,
+        $lt: endOfMinute,
+      },
+    });
+
+    if (count >= 2) {
+      return res
+        .status(400)
+        .send({ message: "Reservation limit reached for this time slot." });
+    }
+
     const updatedReservation = await Client.findByIdAndUpdate(
       _id,
       { $set: { registrationDate: values.registrationDate } },
