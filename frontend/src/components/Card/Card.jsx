@@ -35,7 +35,7 @@ export const Card = ({ reservations, setRefreshData }) => {
   const onSubmit = async (values, { resetForm }) => {
     const changeReservetionData = {
       _id: reservationId,
-      values: values,
+      registrationDate: values.registrationDate,
     };
     refreshDisabledTimes();
     await putData(changeReservetionData, CLIENT_PUT_API);

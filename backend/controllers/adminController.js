@@ -1,61 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const jwt = require("jsonwebtoken");
 const Client = require("../models/client.model");
+const isAdmin = require("../middleware/isAdmin");
+const validateReservationTime = require("../middleware/validateReservationTime");
 
-function isAdmin(req, res, next) {
-  try {
-    const token = req.cookies.token;
-    const jwtSecret = process.env.JWT_SECRET;
-    if (!token) {
-      return res
-        .status(401)
-        .send({ message: "Unauthorized: No token provided" });
-    }
-    const decoded = jwt.verify(token, jwtSecret);
-    if (decoded.isAdmin) {
-      next();
-    } else {
-      res.status(403).send({ message: "Forbidden: Not enough privileges" });
-    }
-  } catch (error) {
-    res.status(401).send({ message: "Unauthorized: Invalid token" });
-  }
-}
-
-router.post("/register", isAdmin, async (req, res) => {
+router.post("/register", isAdmin, validateReservationTime, async (req, res) => {
   try {
     const client = new Client(req.body);
-    const newDate = new Date(client.registrationDate);
-    newDate.setHours(newDate.getHours() + 2);
-    const hours = newDate.getUTCHours();
-    const minutes = newDate.getUTCMinutes();
-
-    if (hours < 8 || hours > 18 || (hours === 18 && minutes > 0)) {
-      return res
-        .status(400)
-        .send({ message: "Please Select Valid Reservation Time" });
-    }
-
-    const registrationDate = new Date(req.body.registrationDate);
-    const startOfMinute = new Date(registrationDate);
-    startOfMinute.setSeconds(0, 0);
-    const endOfMinute = new Date(startOfMinute);
-    endOfMinute.setMinutes(endOfMinute.getMinutes() + 1);
-
-    const count = await Client.countDocuments({
-      registrationDate: {
-        $gte: startOfMinute,
-        $lt: endOfMinute,
-      },
-    });
-
-    if (count >= 2) {
-      return res
-        .status(400)
-        .send({ message: "Reservation limit reached for this time slot." });
-    }
-
     const savedClient = await client.save();
     return res.status(200).send({ message: "Reservation Done" });
   } catch (error) {
@@ -65,6 +16,31 @@ router.post("/register", isAdmin, async (req, res) => {
       .send({ message: "Internal Server Error", error: error.message });
   }
 });
+
+router.put(
+  "/update-reservation",
+  isAdmin,
+  validateReservationTime,
+  async (req, res) => {
+    try {
+      const updatedReservation = await Client.findByIdAndUpdate(
+        req.body._id,
+        { $set: { registrationDate: req.body.registrationDate } },
+        { new: true }
+      );
+      if (updatedReservation) {
+        res.status(200).send({
+          message: "Reservation has been updated",
+          updatedReservation,
+        });
+      } else {
+        res.status(404).send({ message: "Reservation not found" });
+      }
+    } catch (error) {
+      return res.status(500).send({ message: "Internal Server Error" });
+    }
+  }
+);
 
 router.get("/get-booked-slots/:date", isAdmin, async (req, res) => {
   try {
@@ -147,57 +123,6 @@ router.get("/", isAdmin, async (req, res) => {
     return res
       .status(200)
       .send({ message: "Records have been fetched", result: records });
-  } catch (error) {
-    return res.status(500).send({ message: "Internal Server Error" });
-  }
-});
-
-router.put("/update-reservation", isAdmin, async (req, res) => {
-  try {
-    const { _id, values } = req.body;
-
-    const newDate = new Date(values.registrationDate);
-    newDate.setHours(newDate.getHours() + 2);
-    const hours = newDate.getUTCHours();
-    const minutes = newDate.getUTCMinutes();
-
-    if (hours < 8 || hours > 18 || (hours === 18 && minutes > 0)) {
-      return res
-        .status(400)
-        .send({ message: "Please Select Valid Reservation Time" });
-    }
-
-    const registrationDate = new Date(values.registrationDate);
-    const startOfMinute = new Date(registrationDate);
-    startOfMinute.setSeconds(0, 0);
-    const endOfMinute = new Date(startOfMinute);
-    endOfMinute.setMinutes(endOfMinute.getMinutes() + 1);
-
-    const count = await Client.countDocuments({
-      registrationDate: {
-        $gte: startOfMinute,
-        $lt: endOfMinute,
-      },
-    });
-
-    if (count >= 2) {
-      return res
-        .status(400)
-        .send({ message: "Reservation limit reached for this time slot." });
-    }
-
-    const updatedReservation = await Client.findByIdAndUpdate(
-      _id,
-      { $set: { registrationDate: values.registrationDate } },
-      { new: true }
-    );
-    if (updatedReservation) {
-      res
-        .status(200)
-        .send({ message: "Reservation has been updated", updatedReservation });
-    } else {
-      res.status(404).send({ message: "Reservation not found" });
-    }
   } catch (error) {
     return res.status(500).send({ message: "Internal Server Error" });
   }
