@@ -7,7 +7,7 @@ const validateReservationTime = require("../middleware/validateReservationTime")
 router.post("/register", isAdmin, validateReservationTime, async (req, res) => {
   try {
     const client = new Client(req.body);
-    const savedClient = await client.save();
+    await client.save();
     return res.status(200).send({ message: "Reservation Done" });
   } catch (error) {
     console.error("Error saving client:", error);
